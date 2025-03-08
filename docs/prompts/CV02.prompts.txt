@@ -1,0 +1,31 @@
+GPT
+
+--------------------------------------------------------------
+
+7
+add Spring Boot DevTools to gradle project
+
+--------------------------------------------------------------
+
+8
+kratko v cestine
+K čemu slouží závislost Spring Boot DevTools?
+Jaká je její největší výhoda?
+
+Závislost Spring Boot DevTools slouží k usnadnění vývoje aplikací ve Spring Boot.
+Hlavní výhodou je automatické restartování aplikace při změnách kódu, což výrazně urychluje vývoj. Kromě toho DevTools
+poskytuje i další funkce,
+jako je reloading statických souborů a vylepšení ladění. V podstatě zlepšuje produktivitu vývojáře tím, že eliminují
+potřebu manuálního restartování aplikace při každé změně.
+
+--------------------------------------------------------------
+
+9
+Path parameter in spring using
+
+https://www.baeldung.com/spring-requestparam-vs-pathvariable
+
+
+
+
+
