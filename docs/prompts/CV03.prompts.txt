@@ -1,0 +1,62 @@
+GPT
+
+--------------------------------------------------------------
+
+7
+Logování SQL dotazů v application.properties
+
+--------------------------------------------------------------
+
+8
+Zjištěte všechny hodnoty vlastnosti spring.jpa.hibernate.ddl-auto a co tyto hodnoty znamenají.
+K čemu slouží anotace @GeneratedValue a jakých hodnoto může nabývat parametr stragety.
+K čemu slouží anotace @Column.
+K čemu slouží anotace @Transactional.
+K čemu slouží anotace @Query.
+K čemu slouží anotace @JsonIgnore.
+
+
+spring.jpa.hibernate.ddl-auto určuje, jak se mají inicializovat tabulky ve vztahu k JPA entity třídám při startu aplikace.
+Možné hodnoty jsou:
+
+none – Žádná akce (výchozí hodnota).
+update – Pokud existují změny v entitách, Hibernate provede aktualizaci schématu databáze.
+create – Při spuštění aplikace se vytvoří nové schéma databáze podle entit (existující schéma bude ztraceno).
+create-drop – Stejně jako create, ale navíc schéma bude smazáno při ukončení aplikace.
+validate – Validuje, zda schéma databáze odpovídá entitám. Pokud se objeví nesrovnalosti, aplikace se ukončí s chybou.
+
+b) Anotace @GeneratedValue
+Anotace @GeneratedValue slouží pro automatické generování hodnoty pro primární klíč (např. auto-increment v databázi).
+Parametr strategy určuje, jak bude hodnota generována. Možné hodnoty jsou:
+
+GenerationType.AUTO – Hibernate vybere strategii podle databáze.
+GenerationType.IDENTITY – Hodnota bude generována databází (např. auto-increment).
+GenerationType.SEQUENCE – Použije se sekvence pro generování hodnoty.
+GenerationType.TABLE – Použije se speciální tabulka pro generování hodnoty.
+
+c) Anotace @Column
+Anotace @Column se používá k definování vlastností sloupce v databázi.
+Tato anotace může obsahovat parametry, jako je název sloupce, délka, zda je sloupec nullable, zda je unikátní atd.
+
+d) Anotace @Transactional
+Anotace @Transactional slouží k označení metody nebo třídy, která bude vykonána v rámci transakce.
+Všechny databázové operace provedené v rámci této metody budou součástí jedné transakce.
+Pokud dojde k výjimce, všechny operace budou vráceny zpět (rollback).
+
+Použití na třídě znamená, že všechny metody v této třídě budou běžet v rámci transakce.
+Použití na metodě znamená, že pouze tato metoda bude mít transakci.
+
+e) Anotace @Query
+Anotace @Query slouží k definování vlastního JPQL nebo SQL dotazu přímo v repozitáři.
+Může být použita pro složitější dotazy, které nelze vyjádřit pomocí standardních metod repozitáře.
+
+f) Anotace @JsonIgnore
+Anotace @JsonIgnore slouží k tomu, aby bylo určité pole nebo metoda ignorováno při serializaci objektu do JSON.
+To je užitečné, když nechcete, aby některé citlivé nebo nepotřebné informace byly zahrnuty do JSON odpovědi.
+
+
+https://www.geeksforgeeks.org/hibernate-generatedvalue-annotation-in-jpa/
+--------------------------------------------------------------
+
+10
+Přidejte do projektu závislost pro Docker Compose Support.
