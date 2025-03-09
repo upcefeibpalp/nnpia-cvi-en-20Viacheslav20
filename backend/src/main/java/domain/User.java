@@ -1,9 +1,6 @@
 package domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,13 +13,11 @@ import lombok.ToString;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String password;
     private String email;
-
-    @OneToOne(mappedBy = "user")
-    private Profile profile;
 
     public User(Long id, String password, String email) {
         this.id = id;
@@ -32,9 +27,5 @@ public class User {
 
     public User() {
 
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
 }

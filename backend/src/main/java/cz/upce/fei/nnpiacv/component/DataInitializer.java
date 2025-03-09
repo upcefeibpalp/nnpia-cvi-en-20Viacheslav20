@@ -20,10 +20,10 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User adminUser = new User(1L, "admin123", "admin@example.com");
-
-        userRepository.save(adminUser);
-
-        LOGGER.info("Admin user created: {}", adminUser);
+//        User adminUser = new User(1L, "admin123", "admin@example.com");
+//
+//        userRepository.save(adminUser);
+//
+//        LOGGER.info("Admin user created: {}", adminUser);
     }
 }
