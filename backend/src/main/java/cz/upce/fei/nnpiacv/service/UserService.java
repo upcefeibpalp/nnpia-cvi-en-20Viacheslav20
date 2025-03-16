@@ -1,7 +1,7 @@
 package cz.upce.fei.nnpiacv.service;
 
 import cz.upce.fei.nnpiacv.repository.UserRepository;
-import domain.User;
+import cz.upce.fei.nnpiacv.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

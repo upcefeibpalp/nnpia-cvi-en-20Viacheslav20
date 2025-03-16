@@ -1,6 +1,6 @@
 package cz.upce.fei.nnpiacv.repository;
 
-import domain.User;
+import cz.upce.fei.nnpiacv.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
