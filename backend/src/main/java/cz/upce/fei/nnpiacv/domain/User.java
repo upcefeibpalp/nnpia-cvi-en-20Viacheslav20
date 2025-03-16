@@ -1,4 +1,4 @@
-package domain;
+package cz.upce.fei.nnpiacv.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;

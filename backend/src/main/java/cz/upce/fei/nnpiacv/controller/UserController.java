@@ -1,7 +1,7 @@
 package cz.upce.fei.nnpiacv.controller;
 
 import cz.upce.fei.nnpiacv.service.UserService;
-import domain.User;
+import cz.upce.fei.nnpiacv.domain.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
