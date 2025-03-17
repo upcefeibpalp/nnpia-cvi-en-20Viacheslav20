@@ -1,17 +1,21 @@
 package cz.upce.fei.nnpiacv.controller;
 
-import cz.upce.fei.nnpiacv.service.UserService;
 import cz.upce.fei.nnpiacv.domain.User;
+import cz.upce.fei.nnpiacv.exception.UserAlreadyExistsException;
+import cz.upce.fei.nnpiacv.exception.UserNotFoundException;
+import cz.upce.fei.nnpiacv.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
 
+    @Autowired
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -20,27 +24,35 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
-        Optional<User> user = userService.findUserById(id);
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/user")
-    public List<User> findUsers(@RequestParam(required = false) String email) {
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> findUsers(@RequestParam(required = false) String email) {
         if (email != null) {
-            Optional<User> user = userService.findUserByEmail(email);
-            return user.map(List::of).orElse(List.of());
+            return ResponseEntity.ok(List.of(userService.getUserByEmail(email)));
         } else {
-            return userService.findUsers();
+            return ResponseEntity.ok(userService.getUsers());
         }
     }
 
     @PostMapping("/newUser")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User savedUser = userService.addUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).
+                contentType(MediaType.APPLICATION_JSON)
+                .body(savedUser);
     }
+
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
 }

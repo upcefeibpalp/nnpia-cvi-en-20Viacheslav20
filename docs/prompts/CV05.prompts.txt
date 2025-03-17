@@ -1,0 +1,19 @@
+Perplexity
+
+--------------------------------------------------------------
+
+3
+Pro UI byl uveden text úkolu a kod userControlleru.
+
+https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
+
+--------------------------------------------------------------
+
+4
+Pro UI byl uveden text úkolu a kod userControlleru.
+
+--------------------------------------------------------------
+
+5
+Pro UI byl uveden text úkolu a kod userControlleru.
+https://ashok-s-nair.medium.com/java-unit-testing-a-spring-boot-rest-controller-4914a57c344d

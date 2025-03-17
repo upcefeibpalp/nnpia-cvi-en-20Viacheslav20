@@ -1,23 +1,26 @@
 package cz.upce.fei.nnpiacv.controller;
 
-import cz.upce.fei.nnpiacv.service.UserService;
 import cz.upce.fei.nnpiacv.domain.User;
-import org.junit.jupiter.api.BeforeEach;
+import cz.upce.fei.nnpiacv.exception.UserAlreadyExistsException;
+import cz.upce.fei.nnpiacv.exception.UserNotFoundException;
+import cz.upce.fei.nnpiacv.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Optional;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
-
-    private static final User testUser = new User(1L, "some_password", "test@example.com");
 
     @Autowired
     private MockMvc mockMvc;
@@ -25,17 +28,67 @@ public class UserControllerTest {
     @MockitoBean
     private UserService userService;
 
-    @BeforeEach
-    void setUp() {
-        Mockito.when(userService.findUserById(1L)).thenReturn(Optional.of(testUser));
+    @Test
+    public void getUser_shouldReturnUser_whenUserExists() throws Exception {
+        User user = new User("some_password", "test@example.com");
+
+        when(userService.getUserById(1L)).thenReturn(user);
+
+        mockMvc.perform(get("/user/1"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(jsonPath("$.email").value("test@example.com"));
     }
 
     @Test
-    void getUser_shouldReturnUser_whenUserExists() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/1"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("test@example.com"));
+    public void getUser_shouldReturn404_whenUserDoesNotExist() throws Exception {
+        when(userService.getUserById(anyLong())).thenThrow(new UserNotFoundException(999L));
+
+        mockMvc.perform(get("/user/999"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(content().string("User with ID 999 not found."));
     }
 
+    @Test
+    public void testAddUserSuccess() throws Exception {
+
+        User mockUser = new User("pass123", "testUser@example.com");
+
+        when(userService.addUser(any(User.class))).thenReturn(mockUser);
+
+        String jsonPayload = """
+        {
+            "email": "testUser@example.com",
+            "password": "pass123"
+        }
+        """;
+
+        mockMvc.perform(post("/newUser")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonPayload))
+            .andExpect(status().isCreated())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.email").value("testUser@example.com"));
+    }
+
+    @Test
+    public void shouldReturn409WhenUserAlreadyExists() throws Exception {
+        User mockUser = new User("pass123", "testUser@example.com");
+
+        when(userService.addUser(any(User.class))).
+                thenThrow(new UserAlreadyExistsException(mockUser.getEmail()));
+
+        String testUser = """
+        {
+            "email": "testUser@example.com",
+            "password": "pass123"
+        }
+        """;
+
+        mockMvc.perform(post("/newUser")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(testUser))
+            .andExpect(status().isConflict())
+            .andExpect(content().string("User with email testUser@example.com already exists."));
+    }
 }
