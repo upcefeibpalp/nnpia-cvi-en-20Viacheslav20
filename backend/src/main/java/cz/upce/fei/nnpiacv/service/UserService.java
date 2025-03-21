@@ -1,10 +1,9 @@
 package cz.upce.fei.nnpiacv.service;
 
+import cz.upce.fei.nnpiacv.exception.UserAlreadyExistsException;
 import cz.upce.fei.nnpiacv.exception.UserNotFoundException;
 import cz.upce.fei.nnpiacv.repository.UserRepository;
 import cz.upce.fei.nnpiacv.domain.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.List;
 
 @Service
 public class UserService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private final UserRepository _userRepository;
@@ -37,9 +34,25 @@ public class UserService {
     }
 
     public User addUser(User user) {
-//        if (_userRepository.findByEmail(user.getEmail()).isPresent()) {
-//            throw new UserAlreadyExistsException(user.getEmail());
-//        }
+        if (_userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException(user.getEmail());
+        }
         return _userRepository.save(user);
+    }
+
+    public User updateUser(Long id, User userDetails) {
+        User user = _userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(userDetails.getPassword());
+
+        return _userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        User user = _userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        _userRepository.delete(user);
     }
 }

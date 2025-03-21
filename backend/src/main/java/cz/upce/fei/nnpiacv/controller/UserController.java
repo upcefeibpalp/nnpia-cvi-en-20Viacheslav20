@@ -16,34 +16,45 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private final UserService userService;
+    private final UserService _userService;
 
     public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> findUsers(@RequestParam(required = false) String email) {
-        if (email != null) {
-            return ResponseEntity.ok(List.of(userService.getUserByEmail(email)));
-        } else {
-            return ResponseEntity.ok(userService.getUsers());
-        }
+        this._userService = userService;
     }
 
     @PostMapping("/newUser")
     public ResponseEntity<User> addUser(@RequestBody User user) {
-        User savedUser = userService.addUser(user);
+        User savedUser = _userService.addUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).
                 contentType(MediaType.APPLICATION_JSON)
                 .body(savedUser);
     }
 
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User updatedUser = _userService.updateUser(id, userDetails);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(_userService.getUserById(id));
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> findUsers(@RequestParam(required = false) String email) {
+        if (email != null) {
+            return ResponseEntity.ok(List.of(_userService.getUserByEmail(email)));
+        } else {
+            return ResponseEntity.ok(_userService.getUsers());
+        }
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        _userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {

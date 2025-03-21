@@ -1,6 +1,5 @@
 package cz.upce.fei.nnpiacv.domain;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -15,12 +14,31 @@ public class User {
 
     private String email;
 
-    public User(String password, String mail) {
-        this.email = mail;
+    public User(String password, String email) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
