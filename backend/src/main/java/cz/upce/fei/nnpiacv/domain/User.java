@@ -14,9 +14,12 @@ public class User {
 
     private String email;
 
-    public User(String password, String email) {
+    private boolean active;
+
+    public User(String password, String email, boolean active) {
         this.email = email;
         this.password = password;
+        this.active = active;
     }
 
     public User() {
@@ -40,5 +43,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

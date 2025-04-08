@@ -1,0 +1,32 @@
+Grok
+
+--------------------------------------------------------------
+
+3 Pro UI byl uveden text úkolu
+
+--------------------------------------------------------------
+
+4 Pro UI byl uveden text úkolu
+
+1. K čemu slouží parametr key a kdy ho použít?
+Účel: Identifikuje prvky v seznamu pro efektivní rekonsiliaci v Reactu.
+Kdy: Při renderování seznamů (např. .map()), aby React rozpoznal změny.
+Příklad: <li key={id}>{item}</li> – ideálně unikátní ID, ne index.
+
+2. Rozdíl mezi "Re-Evaluate" a "Re-Render"?
+Re-Evaluate: React znovu spustí komponentu (logika, výpočty) při změně stavu/props.
+Re-Render: Aktualizuje DOM, pokud se změní virtuální DOM po re-evaluate.
+Kdy: Při změně state/props (např. setState), pokud se liší výsledek.
+
+https://rkraj604-hzb.medium.com/react-re-render-vs-re-evaluation-issue-with-ease-9eaf5ac99dba
+
+3. Proč se dříve importoval React?
+Dříve: JSX (<div>) se překládal na React.createElement, tak byl nutný import.
+Teď: Nové překladače (od React 17) to zvládají bez explicitního importu.
+
+4. K čemu slouží eslint.config.js a příkazy?
+Účel: Definuje pravidla pro linting (kontrolu kódu) v projektu.
+Příkazy:
+npm run lint – spustí ESLint.
+npx eslint . – zkontroluje všechny soubory.
+npx eslint --fix – opraví automaticky opravitelné chyby.
