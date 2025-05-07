@@ -1,0 +1,39 @@
+Grok
+
+--------------------------------------------------------------
+
+3-5 Pro UI byl uveden text úkolu
+
+--------------------------------------------------------------
+
+*Proč nevypínat CORS v produkčním prostředí:
+CORS chrání API před neautorizovaným přístupem z jiných domén.
+Vypnutím CORS umožníš přístup komukoliv, což může vést ke zneužití API nebo úniku dat.
+Zvyšuje riziko útoků typu CSRF nebo XSS, zejména pokud jsou přihlašovací údaje ukládány v cookies.
+
+*Jak nastavit Spring Boot, aby CORS fungoval jen ve vývojovém prostředí:
+Vytvořit CORS konfiguraci s anotací @Profile("dev"), aby se aktivovala jen při vývojovém profilu.
+Příklad:
+
+@Configuration
+@Profile("dev")
+public class DevCorsConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*");
+    }
+}
+
+*V čem je Fetch API odlišné od Axios API:
+
+Fetch je nativní API prohlížeče, Axios je externí knihovna.
+Fetch neparsuje automaticky JSON – je třeba volat response.json().
+Axios má jednodušší práci s chybami a zrušením požadavků.
+Axios podporuje interceptory, automatickou serializaci dat a další pokročilé funkce.
+
+*Výhody použití TanStack Query:
+
+Automatické kešování, refetchování a aktualizace dat.
+Usnadňuje práci s načítáním dat ve frontendu (React).
+Poskytuje přehledný stav (loading, error, success) bez nutnosti psát vlastní logiku.
+Podporuje background sync, offline režim a další moderní přístupy k datům.

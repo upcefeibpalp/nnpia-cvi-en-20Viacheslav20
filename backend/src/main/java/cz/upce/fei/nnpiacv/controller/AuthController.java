@@ -1,7 +1,7 @@
 package cz.upce.fei.nnpiacv.controller;
 
 import cz.upce.fei.nnpiacv.component.JwtUtil;
-import cz.upce.fei.nnpiacv.model.LoginRequest;
+import cz.upce.fei.nnpiacv.domain.LoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

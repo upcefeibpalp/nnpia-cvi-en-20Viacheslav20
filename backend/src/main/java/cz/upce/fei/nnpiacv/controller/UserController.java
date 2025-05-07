@@ -36,6 +36,18 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PostMapping("/user/{id}/activate")
+    public ResponseEntity<User> activateUser(@PathVariable Long id) {
+        User user = _userService.setUserActiveStatus(id, true);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/user/{id}/deactivate")
+    public ResponseEntity<User> deactivateUser(@PathVariable Long id) {
+        User user = _userService.setUserActiveStatus(id, false);
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(_userService.getUserById(id));

@@ -50,6 +50,12 @@ public class UserService {
         return _userRepository.save(user);
     }
 
+    public User setUserActiveStatus(Long id, boolean isActive) {
+        User user = getUserById(id);
+        user.setActive(isActive);
+        return _userRepository.save(user);
+    }
+
     public void deleteUser(Long id) {
         User user = _userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
