@@ -1,12 +1,19 @@
+// src/App.tsx
 import { useState } from 'react';
-import UserTable from './components/UserTable';
-import { Button, Container, Typography, IconButton, Box, createTheme, ThemeProvider, CssBaseline } from '@mui/material';
+import { Outlet, Link } from 'react-router-dom';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+  Box,
+} from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
-import axios from 'axios';
-import { User } from './types';
 
-const App = () => {
-  const [users, setUsers] = useState<User[]>([]);
+function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light');
 
   const theme = createTheme({
@@ -27,53 +34,33 @@ const App = () => {
     setThemeMode(themeMode === 'light' ? 'dark' : 'light');
   };
 
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get('http://localhost:9000/users');
-      const data: User[] = response.data;
-      console.log('Fetched users:', data);
-      setUsers(data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
-
-const handleToggleActive = async (id: number) => {
-  const user = users.find(u => u.id === id);
-  if (!user) return;
-
-  const endpoint = user.active
-    ? `http://localhost:9000/user/${id}/deactivate`
-    : `http://localhost:9000/user/${id}/activate`;
-
-  try {
-    const response = await axios.post(endpoint);
-    const updatedUser = response.data;
-
-    setUsers(users.map(u => (u.id === id ? updatedUser : u)));
-  } catch (error) {
-    console.error('Error toggling user active status:', error);
-  }
-};
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container sx={{ backgroundColor: 'background.default', minHeight: '100vh', py: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h4" color="text.primary">
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             User Management
           </Typography>
+          <Link to="/" style={{ color: 'white', marginRight: '1rem', textDecoration: 'none' }}>
+            Home
+          </Link>
+          <Link to="/users" style={{ color: 'white', marginRight: '1rem', textDecoration: 'none' }}>
+            Users
+          </Link>
+          <Link to="/register" style={{ color: 'white', marginRight: '1rem', textDecoration: 'none' }}>
+            Register
+          </Link>
           <IconButton onClick={toggleTheme} color="inherit">
             {themeMode === 'light' ? <Brightness4 /> : <Brightness7 />}
           </IconButton>
-        </Box>
-        <Button variant="contained" color="primary" onClick={fetchUsers}>
-          Fetch Users
-        </Button>
-        <UserTable users={users} onToggleActive={handleToggleActive} />
-      </Container>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ padding: 2 }}>
+        <Outlet />
+      </Box>
     </ThemeProvider>
   );
-};
+}
 
 export default App;

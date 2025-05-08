@@ -5,10 +5,11 @@ interface UserProps extends UserType {
   onToggleActive: () => void;
 }
 
-const User: React.FC<UserProps> = ({ id, email, active, onToggleActive }) => {
+const User: React.FC<UserProps> = ({ id, email, name, active, onToggleActive }) => {
   return (
     <>
       <TableCell>{id}</TableCell>
+      <TableCell>{name}</TableCell>
       <TableCell>{email}</TableCell>
       <TableCell>{active ? 'Yes' : 'No'}</TableCell>
       <TableCell>

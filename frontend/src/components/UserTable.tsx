@@ -14,6 +14,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onToggleActive }) => {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Active</TableCell>
             <TableCell>Action</TableCell>
@@ -24,6 +25,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onToggleActive }) => {
             <TableRow key={user.id}>
               <User
                 id={user.id}
+                name={user.name}
                 email={user.email}
                 active={user.active}
                 onToggleActive={() => onToggleActive(user.id)}
