@@ -11,6 +11,8 @@ CORS chrání API před neautorizovaným přístupem z jiných domén.
 Vypnutím CORS umožníš přístup komukoliv, což může vést ke zneužití API nebo úniku dat.
 Zvyšuje riziko útoků typu CSRF nebo XSS, zejména pokud jsou přihlašovací údaje ukládány v cookies.
 
+https://aws.amazon.com/what-is/cross-origin-resource-sharing/?nc1=h_ls
+
 *Jak nastavit Spring Boot, aby CORS fungoval jen ve vývojovém prostředí:
 Vytvořit CORS konfiguraci s anotací @Profile("dev"), aby se aktivovala jen při vývojovém profilu.
 Příklad:
@@ -30,6 +32,8 @@ Fetch je nativní API prohlížeče, Axios je externí knihovna.
 Fetch neparsuje automaticky JSON – je třeba volat response.json().
 Axios má jednodušší práci s chybami a zrušením požadavků.
 Axios podporuje interceptory, automatickou serializaci dat a další pokročilé funkce.
+
+https://medium.com/@johnnyJK/axios-vs-fetch-api-selecting-the-right-tool-for-http-requests-ecb14e39e285
 
 *Výhody použití TanStack Query:
 

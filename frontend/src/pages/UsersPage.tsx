@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom'; // ⬅️ добавили
+import { useLoaderData } from 'react-router-dom';
 import { Typography, Box, Button, Container } from '@mui/material';
 import axios from 'axios';
 import { User } from './types';
 import UserTable from '../components/UserTable';
 
+
 export async function loader() {
   try {
-    const response = await axios.get('http://localhost:9000/users');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
     const rawUsers = response.data;
     if (!Array.isArray(rawUsers)) {
       return [];
     }
 
-    debugger
     const users: User[] = rawUsers.map((user: any) => ({
       id: user.id,
       name: user.name,
@@ -33,10 +33,12 @@ export default function Component() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/users');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+
       const data: User[] = response.data;
       setUsers(data);
     } catch (error) {
+        alert("Error: ", error)
     }
   };
 
@@ -45,15 +47,15 @@ export default function Component() {
     if (!user) return;
 
     const endpoint = user.active
-      ? `http://localhost:9000/user/${id}/deactivate`
-      : `http://localhost:9000/user/${id}/activate`;
+      ? `${import.meta.env.VITE_API_URL}/user/${id}/deactivate`
+      : `${import.meta.env.VITE_API_URL}/user/${id}/activate`;
 
     try {
       const response = await axios.post(endpoint);
       const updatedUser = response.data;
       setUsers(users.map(u => (u.id === id ? updatedUser : u)));
     } catch (error) {
-      console.error('Error toggling user active status:', error);
+        alert("Error: ", error)
     }
   };
 

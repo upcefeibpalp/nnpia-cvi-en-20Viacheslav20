@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Box, Typography, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField, Button, Box, Typography, FormControlLabel, Checkbox }
+    from '@mui/material';
 import axios from 'axios';
 import { User } from '../types';
 
@@ -13,18 +14,16 @@ const UserForm = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    console.log('Submitted data:', data);
-
     try {
       const response = await axios.post('http://localhost:9000/newUser', data);
 
       if (response.status === 201) {
         alert('User successfully added!');
       } else {
-        console.error('Unexpected response:', response);
+        alert('Unexpected response:', response);
       }
     } catch (error) {
-      console.error('Error adding user:', error);
+       alert('Error adding user:', error);
     }
   };
 
@@ -55,6 +54,15 @@ const UserForm = () => {
         })}
         error={!!errors.email}
         helperText={errors.email?.message}
+      />
+
+      <TextField
+         label="Password"
+         fullWidth
+         margin="normal"
+         {...register('password', { required: 'Password is required' })}
+         error={!!errors.password}
+         helperText={errors.password?.message}
       />
 
       <FormControlLabel

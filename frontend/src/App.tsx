@@ -1,17 +1,9 @@
-// src/App.tsx
 import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
-  Box,
-} from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, createTheme, ThemeProvider,
+    CssBaseline, Box,} from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
+import LoginButton from './components/LoginButton';
 
 function App() {
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light');
@@ -51,6 +43,7 @@ function App() {
           <Link to="/register" style={{ color: 'white', marginRight: '1rem', textDecoration: 'none' }}>
             Register
           </Link>
+          <LoginButton />
           <IconButton onClick={toggleTheme} color="inherit">
             {themeMode === 'light' ? <Brightness4 /> : <Brightness7 />}
           </IconButton>

@@ -1,0 +1,7 @@
+GPT
+
+--------------------------------------------------------------
+
+6-8 Pro UI byl uveden text úkolu
+
+https://vite.dev/guide/env-and-mode
